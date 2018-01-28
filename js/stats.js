@@ -9,6 +9,7 @@ var getMaxElement = function(arr) {
             maxIndex = i;
         }
     }  
+    return max;
 }
 window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -25,18 +26,23 @@ window.renderStatistics = function (ctx, names, times) {
    ctx.fillText('Список результатов:', 120, 60);
     
     getMaxElement(times);
+    console.log(times);
     
-    var histogramWidth = 150;
-    var step = histogramWidth / (max - 0);
-    ctx.fillText('Худшее время: ' + max + ' мс у игрока ' + names[maxIndex], initialX, 80);
-    var barHeight = 20;
-    var indent = 30;
+    var histogramHeight = 150;
+    var step = histogramHeight / (max - 0);
+    
+    ctx.fillText('Худшее время: ' + Math.round(max) + ' мс у игрока ' + names[maxIndex], 120, 100);
+    
+    var barWidth = 40;
+    var indent = 50;
     var initialX = 120;
-    var initialY = 100;
+    var initialY = 110;
     var lineHeight = 15;
     for (var i = 0; i < times.length; i++) {
-        ctx.fillRect(initialX, initialY + indent * i, times[i] * step, barHeight);
-        ctx.fillText(names[i], initialX + histogramWidth + barHeight, initialY + lineHeight + indent * i);
+         ctx.fillStyle = 'rgba(0, 0, 255, 0.7)';
+        ctx.fillRect(initialX + indent * i, initialY, barWidth, times[i] * step);
+        ctx.fillStyle = '#000';
+        ctx.fillText(names[i], initialX + indent * i, initialY + histogramHeight + lineHeight);
     }
 
 };
